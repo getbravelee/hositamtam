@@ -2,11 +2,11 @@ package com.hositamtam.search.mapper;
 
 import com.hositamtam.search.dto.SuggestionDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface SearchMapper {
-    List<SuggestionDto> findByLocationContaining(String query);
-
+    List<SuggestionDto> findByLocationContaining(@Param("keyword") String keyword);
 }

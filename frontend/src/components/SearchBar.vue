@@ -6,11 +6,20 @@
         @input="fetchSuggestions"
         placeholder="검색어 입력"
     />
-    <ul v-if="suggestions.length">
-      <li v-for="suggestion in suggestions" :key="suggestion.id" @click="selectSuggestion(suggestion)">
-        {{ suggestion.name }}
-      </li>
-    </ul>
+    <table v-if="suggestions.length" border="1">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>제안 이름</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="suggestion in suggestions" :key="suggestion.id" @click="selectSuggestion(suggestion)">
+        <td>{{ suggestion.id }}</td>
+        <td>{{ suggestion.locationName }}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -26,8 +35,8 @@ export default {
   },
   methods: {
     fetchSuggestions() {
-      if (this.query.length > 1) { // 최소 2글자 이상 입력 시
-        axios.get(`/api/search/suggestions?query=${this.query}`)
+      if (this.query.length > 1) {
+        axios.get(`/api/search/suggestions?keyword=${this.query}`)
             .then(response => {
               this.suggestions = response.data; // 서버에서 받은 제안 목록
             })
@@ -39,7 +48,7 @@ export default {
       }
     },
     selectSuggestion(suggestion) {
-      this.query = suggestion.name; // 선택한 제안으로 검색어 업데이트
+      this.query = suggestion.locationName; // 선택한 제안으로 검색어 업데이트
       this.suggestions = []; // 제안 목록 비우기
     }
   }
@@ -48,4 +57,17 @@ export default {
 
 <style scoped>
 /* 스타일 추가 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+tr:hover {
+  background-color: #f2f2f2;
+}
 </style>

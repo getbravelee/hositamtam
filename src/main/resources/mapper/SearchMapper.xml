@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hositamtam.search.mapper.SearchMapper">
-    <select id="selectSearch" resultType="com.hositamtam.search.dto.SuggestionDto">
-        SELECT * FROM search_table WHERE condition = #{param}
+    <select id="findByLocationContaining" resultType="com.hositamtam.search.dto.SuggestionDto">
+        SELECT id, location_name as locationName FROM location WHERE location_name LIKE CONCAT('%', #{keyword}, '%')
     </select>
 </mapper>

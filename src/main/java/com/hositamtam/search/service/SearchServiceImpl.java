@@ -9,15 +9,16 @@ import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-    @Autowired
+
     private final SearchMapper searchMapper;
 
+    @Autowired
     public SearchServiceImpl(SearchMapper searchMapper) {
         this.searchMapper = searchMapper;
     }
 
     @Override
-    public List<SuggestionDto> getSuggestions(String query) {
-        return searchMapper.findByLocationContaining(query);
+    public List<SuggestionDto> getSuggestions(String keyword) {
+        return searchMapper.findByLocationContaining(keyword);
     }
 }
